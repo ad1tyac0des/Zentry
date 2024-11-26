@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import Button from "./Button";
+import { TiLocationArrow } from "react-icons/ti";
 
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
@@ -59,7 +61,7 @@ const Hero = () => {
                     />
 
                     <video
-                        autoPlay
+                        // autoPlay
                         loop
                         muted
                         src={getVideoSrc(
@@ -85,9 +87,15 @@ const Hero = () => {
                             <br />
                             Unleash the Play Economy
                         </p>
+
+                        <Button id="watch-trailer" title="Watch Trailer" leftIcon={<TiLocationArrow />} containerClass="!bg-yellow-300 flex-center gap-2" />
                     </div>
                 </div>
             </div>
+
+            <h1 className="hero-heading special-font absolute bottom-5 right-5 text-black">
+                G<b>a</b>ming
+            </h1>
         </div>
     );
 };
