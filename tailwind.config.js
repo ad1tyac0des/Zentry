@@ -8,7 +8,7 @@ export default {
         general: ["general", "sans-serif"],
         "robert-medium": ["robert-medium", "sans-serif"],
         "robert-regular": ["robert-regular", "sans-serif"],
-        "zentry-regular": ["zentry-regular", "sans-serif"],
+        zentry: ["zentry", "sans-serif"],
       },
       colors: {
         blue: {
