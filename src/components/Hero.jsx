@@ -1,8 +1,13 @@
 import { useState, useRef } from "react";
 import Button from "./Button";
+
 import { TiLocationArrow } from "react-icons/ti";
+
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
@@ -53,6 +58,29 @@ const Hero = () => {
         {
             dependencies: [currentIndex],
             revertOnUpdate: true,
+        }
+    );
+
+    // Handle Video Clip Animation on Scroll
+    useGSAP(
+        () => {
+            gsap.set("#video-frame", {
+                clipPath: "polygon(14% 0%, 74% 0%, 90% 90%, -3% 100%)",
+                borderRadius: "0% 0% 39% 0%",
+            })
+
+            gsap.from("#video-frame", {
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                borderRadius: "0% 0% 0% 0%",
+                ease: "power1.inOut",
+                scrollTrigger: {
+                    trigger: "#video-frame",
+                    start: "center center",
+                    end: "bottom center",
+                    // markers: true,
+                    scrub: true
+                }
+            })
         }
     );
 
