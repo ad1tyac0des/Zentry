@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Button from "./Button";
 
 import { TiLocationArrow } from "react-icons/ti";
@@ -31,11 +31,17 @@ const Hero = () => {
         setCurrentIndex(upcomingVideoIndex);
     };
 
+    useEffect(() => {
+        if (loadedVideos === totalVideos - 1) {
+            setIsLoading(false);
+        }
+    }, [loadedVideos]);
+
     // Handle Video Click Animation on Hero Page
     useGSAP(
         () => {
-            if (hasClicked){
-                gsap.set("#next-video", {visibility: "visible"});
+            if (hasClicked) {
+                gsap.set("#next-video", { visibility: "visible" });
 
                 gsap.to("#next-video", {
                     transformOrigin: "center center",
@@ -45,14 +51,14 @@ const Hero = () => {
                     duration: 1,
                     ease: "power1.inOut",
                     onStart: () => nextVideoRef.current.play(),
-                })
+                });
 
                 gsap.from("#current-video", {
                     transformOrigin: "center center",
                     scale: 0,
                     duration: 1.5,
                     ease: "power1.inOut",
-                })
+                });
             }
         },
         {
@@ -62,32 +68,41 @@ const Hero = () => {
     );
 
     // Handle Video Clip Animation on Scroll
-    useGSAP(
-        () => {
-            gsap.set("#video-frame", {
-                clipPath: "polygon(14% 0%, 74% 0%, 90% 90%, -3% 100%)",
-                borderRadius: "0% 0% 39% 0%",
-            })
+    useGSAP(() => {
+        gsap.set("#video-frame", {
+            clipPath: "polygon(14% 0%, 74% 0%, 90% 90%, -3% 100%)",
+            borderRadius: "0% 0% 39% 0%",
+        });
 
-            gsap.from("#video-frame", {
-                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-                borderRadius: "0% 0% 0% 0%",
-                ease: "power1.inOut",
-                scrollTrigger: {
-                    trigger: "#video-frame",
-                    start: "center center",
-                    end: "bottom center",
-                    // markers: true,
-                    scrub: true
-                }
-            })
-        }
-    );
+        gsap.from("#video-frame", {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            borderRadius: "0% 0% 0% 0%",
+            ease: "power1.inOut",
+            scrollTrigger: {
+                trigger: "#video-frame",
+                start: "center center",
+                end: "bottom center",
+                // markers: true,
+                scrub: true,
+            },
+        });
+    });
 
     const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
     return (
         <div className="relative h-dvh w-screen overflow-x-hidden">
+            {/* Preloader Animation */}
+            {isLoading && (
+                <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+                    <div className="three-body">
+                        <div className="three-body__dot" />
+                        <div className="three-body__dot" />
+                        <div className="three-body__dot" />
+                    </div>
+                </div>
+            )}
+
             <div
                 id="video-frame"
                 className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
@@ -114,7 +129,7 @@ const Hero = () => {
                         loop
                         muted
                         id="next-video"
-                        className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
+                        className="absolute-center invisible absolute z-20 size-64 object-cover object-center rounded-lg"
                         onLoadedData={handleVideoLoad}
                         ref={nextVideoRef}
                         src={getVideoSrc(currentIndex)}
@@ -148,7 +163,12 @@ const Hero = () => {
                             Unleash the Play Economy
                         </p>
 
-                        <Button id="watch-trailer" title="Watch Trailer" leftIcon={<TiLocationArrow />} containerClass="!bg-yellow-300 flex-center gap-2" />
+                        <Button
+                            id="watch-trailer"
+                            title="Watch Trailer"
+                            leftIcon={<TiLocationArrow />}
+                            containerClass="!bg-yellow-300 flex-center gap-2"
+                        />
                     </div>
                 </div>
             </div>
