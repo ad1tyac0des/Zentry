@@ -2,10 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
 
-const Navbar = () => {
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isIndicatorActive, setIsIndicatorActive] = useState(false);
-
+const Navbar = ({ controls }) => {
+  const { isAudioPlaying, setIsAudioPlaying, isIndicatorActive, setIsIndicatorActive } = controls;
+  
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
 
@@ -58,7 +57,8 @@ const Navbar = () => {
             </div>
 
             <button
-              className="ml-8 flex items-center space-x-0.5 px-2 py-3"
+              id="audio-button"
+              className="ml-8 flex items-center space-x-1 px-2 py-3"
               onClick={toggleAudioIndicator}
             >
               <audio ref={audioElementRef} className="hidden" src="audio/music_main.mp3" loop />
