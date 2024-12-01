@@ -18,10 +18,12 @@ const Navbar = ({ controls }) => {
     const audio = audioElementRef.current;
     if (!audio) return;
 
+    // clear existing fade interval (if any)
     if (fadeIntervalRef.current) {
       clearInterval(fadeIntervalRef.current);
     }
 
+    // play the audio --> but first ensure that volume is set to 0
     audio.volume = 0;
     audio.play();
 
@@ -30,6 +32,7 @@ const Navbar = ({ controls }) => {
         audio.volume = Math.min(audio.volume + 0.1, 1);
       } else {
         audio.volume = 1;
+        // after volume reached its max --> stop the fadeInterval and then reset its value
         clearInterval(fadeIntervalRef.current);
         fadeIntervalRef.current = null;
       }
@@ -48,8 +51,10 @@ const Navbar = ({ controls }) => {
       if (audio.volume > 0.01) {
         audio.volume = Math.max(audio.volume - 0.1, 0);
       } else {
+        // pause the audio --> but first ensure that audio is set to 0
         audio.volume = 0;
         audio.pause();
+        // after audio is paused --> stop the fadeInterval and then reset its value
         clearInterval(fadeIntervalRef.current);
         fadeIntervalRef.current = null;
       }
@@ -63,6 +68,7 @@ const Navbar = ({ controls }) => {
       fadeOutAudio();
     }
 
+    // Ensure that fade interval is cleared when component unmounts
     return () => {
       if (fadeIntervalRef.current) {
         clearInterval(fadeIntervalRef.current);
