@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
 
@@ -7,18 +7,67 @@ const Navbar = ({ controls }) => {
   
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
+  const fadeIntervalRef = useRef(null);
 
   const toggleAudioIndicator = () => {
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
   };
 
+  const fadeInAudio = () => {
+    const audio = audioElementRef.current;
+    if (!audio) return;
+
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+    }
+
+    audio.volume = 0;
+    audio.play();
+
+    fadeIntervalRef.current = setInterval(() => {
+      if (audio.volume < 0.99) {
+        audio.volume = Math.min(audio.volume + 0.1, 1);
+      } else {
+        audio.volume = 1;
+        clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+      }
+    }, 50);
+  };
+
+  const fadeOutAudio = () => {
+    const audio = audioElementRef.current;
+    if (!audio) return;
+
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+    }
+
+    fadeIntervalRef.current = setInterval(() => {
+      if (audio.volume > 0.01) {
+        audio.volume = Math.max(audio.volume - 0.1, 0);
+      } else {
+        audio.volume = 0;
+        audio.pause();
+        clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+      }
+    }, 50);
+  };
+
   useEffect(() => {
     if (isAudioPlaying) {
-        audioElementRef.current.play();
+      fadeInAudio();
     } else {
-        audioElementRef.current.pause();
+      fadeOutAudio();
     }
+
+    return () => {
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
+    };
   }, [isAudioPlaying]);
 
   const navItems = ["Nexus", "Vault", "Prologue", "About", "Contact"];
