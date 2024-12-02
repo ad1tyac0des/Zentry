@@ -143,7 +143,7 @@ const Navbar = ({ controls }) => {
 
             <button
               id="audio-button"
-              className="ml-8 flex items-center space-x-1 px-2 py-3"
+              className="ml-8 flex items-center space-x-1 px-2 py-3 outline-none"
               onClick={toggleAudioIndicator}
             >
               <audio ref={audioElementRef} className="hidden" src="audio/music_main.mp3" loop />
