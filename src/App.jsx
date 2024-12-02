@@ -10,7 +10,8 @@ const App = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
   const [clickCount, setClickCount] = useState(1);
-
+  const [scrollDirection, setScrollDirection] = useState(1);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const handleControls = (e) => {
     if (e.target.id !== "audio-button" && clickCount===1) {
@@ -21,15 +22,19 @@ const App = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line no-unused-vars
     const lenis = new Lenis({
       autoRaf: true,
     });
+
+    lenis.on("scroll", ({ direction, progress}) => {
+      setScrollDirection(direction);
+      setScrollProgress(progress);
+    })
   }, []);
 
   return (
     <main onClick={handleControls} className="relative min-h-screen w-screen overflow-x-hidden">
-      <Navbar controls={{ isAudioPlaying, setIsAudioPlaying, isIndicatorActive, setIsIndicatorActive }} />
+      <Navbar controls={{ isAudioPlaying, setIsAudioPlaying, isIndicatorActive, setIsIndicatorActive, scrollDirection, scrollProgress }} />
       <Hero />
       <About />
     </main>

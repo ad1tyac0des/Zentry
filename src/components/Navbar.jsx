@@ -1,10 +1,13 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
+import gsap from "gsap";
 
 const Navbar = ({ controls }) => {
-  const { isAudioPlaying, setIsAudioPlaying, isIndicatorActive, setIsIndicatorActive } = controls;
+  const { isAudioPlaying, setIsAudioPlaying, isIndicatorActive, setIsIndicatorActive, scrollDirection, scrollProgress } = controls;
   
+  const [isNavbarVisible, setNavbarVisible] = useState(true);
+
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
   const fadeIntervalRef = useRef(null);
@@ -13,6 +16,32 @@ const Navbar = ({ controls }) => {
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
   };
+
+  // Handle navbar visibility
+  useEffect(() => {
+    const navBar = navContainerRef.current;
+    if (scrollProgress < 0.01 ) {
+      setNavbarVisible(true);
+      navBar.classList.remove("floating-nav");
+    } else if (scrollDirection === 1) {
+      setNavbarVisible(false);
+      navBar.classList.add("floating-nav");
+    } else if (scrollDirection === -1 ) {
+      setNavbarVisible(true);
+      navBar.classList.add("floating-nav");
+    }
+  }, [scrollDirection, scrollProgress]);
+
+  // Animate navbar
+  useEffect(() => {
+    const navBar = navContainerRef.current;
+    gsap.to(navBar, {
+      y: isNavbarVisible ? 0 : -100,
+      opacity: isNavbarVisible ? 1 : 0,
+      duration: 0.2,
+      ease: "power1.inOut",
+    })
+  }, [isNavbarVisible]);
 
   const fadeInAudio = () => {
     const audio = audioElementRef.current;
@@ -36,7 +65,7 @@ const Navbar = ({ controls }) => {
         clearInterval(fadeIntervalRef.current);
         fadeIntervalRef.current = null;
       }
-    }, 50);
+    }, 100);
   };
 
   const fadeOutAudio = () => {
@@ -58,9 +87,10 @@ const Navbar = ({ controls }) => {
         clearInterval(fadeIntervalRef.current);
         fadeIntervalRef.current = null;
       }
-    }, 50);
+    }, 100);
   };
 
+  // Fade in/out audio while play/pause
   useEffect(() => {
     if (isAudioPlaying) {
       fadeInAudio();
@@ -81,10 +111,10 @@ const Navbar = ({ controls }) => {
   return (
     <div
       ref={navContainerRef}
-      className="fixed inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
+      className="fixed inset-x-0 top-2 sm:top-4 z-50 h-16 md:h-20 border-none transition-all duration-700 sm:inset-x-6 mx-2 sm:mx-0"
     >
       <header className="w-full absolute top-1/2 -translate-y-1/2">
-        <nav className="size-full flex items-center justify-between p-4">
+        <nav className="size-full flex items-center justify-between p-4 md:p-6">
           <div className="nav-left flex items-center gap-7">
             <img src="img/logo.png" alt="logo" className="w-10" />
 
