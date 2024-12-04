@@ -23,12 +23,15 @@ const Navbar = ({ controls }) => {
     if (scrollProgress < 0.01 ) {
       setNavbarVisible(true);
       navBar.classList.remove("floating-nav");
+      navBar.classList.add("!border-transparent");
     } else if (scrollDirection === 1) {
       setNavbarVisible(false);
       navBar.classList.add("floating-nav");
+      navBar.classList.remove("!border-transparent");
     } else if (scrollDirection === -1 ) {
       setNavbarVisible(true);
       navBar.classList.add("floating-nav");
+      navBar.classList.remove("!border-transparent");
     }
   }, [scrollDirection, scrollProgress]);
 
@@ -111,7 +114,7 @@ const Navbar = ({ controls }) => {
   return (
     <div
       ref={navContainerRef}
-      className="fixed inset-x-0 top-2 sm:top-4 z-50 h-16 md:h-20 border-none transition-all duration-700 sm:inset-x-6 mx-2 sm:mx-0"
+      className="fixed inset-x-0 top-2 sm:top-4 z-50 h-16 md:h-20 border border-[#FFFFFF33] transition-all duration-700 sm:inset-x-6 mx-2 sm:mx-0"
     >
       <header className="w-full absolute top-1/2 -translate-y-1/2">
         <nav className="size-full flex items-center justify-between p-4 md:p-6">
