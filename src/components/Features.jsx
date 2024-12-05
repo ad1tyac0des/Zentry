@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 
 const BentoTilt = ({ children, className="", isMainCard=false }) => {
@@ -42,6 +42,14 @@ const BentoCard = ({ src, title, description }) => {
     const containerRef = useRef();
     const videoRef = useRef();
 
+    useEffect(() => {
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (isTouchDevice && videoRef.current) {
+            videoRef.current.play();
+        }
+    }, [])
+
     const handleMouseEnter = () => {
         if (!containerRef.current || !videoRef.current) return;
         videoRef.current.play();
@@ -59,6 +67,7 @@ const BentoCard = ({ src, title, description }) => {
                 ref={videoRef}
                 loop
                 muted
+                playsInline
                 className="absolute top-0 left-0 size-full object-cover object-center"
             />
 
