@@ -5,6 +5,7 @@ import "lenis/dist/lenis.css";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Features from "./components/Features";
 
 const App = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -37,6 +38,7 @@ const App = () => {
       <Navbar controls={{ isAudioPlaying, setIsAudioPlaying, isIndicatorActive, setIsIndicatorActive, scrollDirection, scrollProgress }} />
       <Hero />
       <About />
+      <Features />
     </main>
   );
 };
