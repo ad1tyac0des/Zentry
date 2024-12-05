@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import gsap from "gsap";
 
-const BentoTilt = ({ children, className="" }) => {
-    const [transformStyle, setTransformStyle] = useState('');
+const BentoTilt = ({ children, className="", isMainCard=false }) => {
     const itemRef = useRef();
 
     const handleMouseMove = (e) => {
@@ -12,22 +12,27 @@ const BentoTilt = ({ children, className="" }) => {
         const relativeX = (e.clientX - left) / width;
         const relativeY = (e.clientY - top) / height;
         
-        const tiltX = (relativeY - 0.5) * 8;
-        const tiltY = (relativeX - 0.5) * -8;
+        const tiltX = (relativeY - 0.5) * (isMainCard ? 7 : 10);
+        const tiltY = (relativeX - 0.5) * (isMainCard ? -7 : -10);
 
-        const newTransformStyle = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.95, 0.95, 0.95)`;
-
-        setTransformStyle(newTransformStyle);
+        gsap.to(itemRef.current, {
+            transformPerspective: 800,
+            rotationX: tiltX,
+            rotationY: tiltY,
+            scale: 0.93,
+        })
     }
 
     const handleMouseLeave = () => {
-        setTransformStyle('')
+        gsap.to(itemRef.current, {
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1
+        })
     }
 
-
-
     return (
-        <div className={className} ref={itemRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ transform: transformStyle }}>
+        <div className={className} ref={itemRef} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
             {children}
         </div>
     )
@@ -73,7 +78,7 @@ const Features = () => {
                     </p>
                 </div>
 
-                <BentoTilt className="border-hsla w-full h-96 md:h-[65vh] relative mb-7 overflow-hidden rounded-md">
+                <BentoTilt className="border-hsla w-full h-96 md:h-[65vh] relative mb-7 overflow-hidden rounded-md" isMainCard={true}>
                     <BentoCard
                         src="videos/feature-1.mp4"
                         title={
