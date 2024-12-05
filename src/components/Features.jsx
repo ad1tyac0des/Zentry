@@ -39,11 +39,24 @@ const BentoTilt = ({ children, className="", isMainCard=false }) => {
 }
 
 const BentoCard = ({ src, title, description }) => {
+    const containerRef = useRef();
+    const videoRef = useRef();
+
+    const handleMouseEnter = () => {
+        if (!containerRef.current || !videoRef.current) return;
+        videoRef.current.play();
+    }
+
+    const handleMouseLeave = () => {
+        if (!containerRef.current || !videoRef.current) return;
+        videoRef.current.pause();
+    }
+
     return (
-        <div className="relative size-full">
+        <div ref={containerRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative size-full cursor-grab active:cursor-grabbing">
             <video
                 src={src}
-                autoPlay
+                ref={videoRef}
                 loop
                 muted
                 className="absolute top-0 left-0 size-full object-cover object-center"
