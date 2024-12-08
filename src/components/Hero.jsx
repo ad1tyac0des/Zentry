@@ -91,10 +91,10 @@ const Hero = () => {
     const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
     return (
-        <div id="home" className="relative h-dvh w-screen overflow-x-hidden">
+        <div id="home" className="relative h-screen w-screen overflow-x-hidden">
             {/* Preloader Animation */}
             {isLoading && (
-                <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+                <div className="flex-center absolute z-[100] h-screen w-screen overflow-hidden bg-violet-50">
                     <div className="three-body">
                         <div className="three-body__dot" />
                         <div className="three-body__dot" />
@@ -105,7 +105,7 @@ const Hero = () => {
 
             <div
                 id="video-frame"
-                className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
+                className="relative z-10 h-screen w-screen overflow-hidden rounded-lg bg-blue-75"
             >
                 <div>
                     <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">

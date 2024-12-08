@@ -60,7 +60,7 @@ const Story = () => {
     };
 
     return (
-        <section id="story" className="min-h-dvh w-screen bg-black text-blue-50">
+        <section id="story" className="min-h-screen w-screen bg-black text-blue-50">
             <div className="size-full flex flex-col items-center py-10 pb-24">
                 <p className="font-general uppercase text-sm md:text-[12px]">
                     The open ip universe
