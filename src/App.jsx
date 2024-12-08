@@ -8,6 +8,7 @@ import About from "./components/About";
 import Features from "./components/Features";
 import Story from "./components/Story";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -43,6 +44,7 @@ const App = () => {
       <Features />
       <Story />
       <Contact />
+      <Footer />
     </main>
   );
 };
