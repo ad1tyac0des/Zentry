@@ -7,16 +7,32 @@ const LinkGroup = ({ title, items }) => {
         {title}
       </p>
       {items.map(({ name, link, active = true }) => (
-        <a
-          key={name}
-          href={link}
-          className={`block text-[1.8rem] ${active ? "text-black" : "text-black/40"
-            } font-circular-web leading-none py-2 hover:text-black/60 transition-colors duration-300`}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          {name}
-        </a>
+        <div key={name} className="group relative overflow-hidden">
+          <div className="translate-y-0 skew-y-0 transition duration-700 group-hover:translate-y-[-160%] group-hover:skew-y-[24deg]">
+            <a
+              key={name}
+              href={link}
+              className={`block text-[1.8rem] ${active ? "text-black" : "text-black/40"
+                } font-circular-web leading-none py-2`}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {name}
+            </a>
+          </div>
+          <div className="absolute translate-y-[164%] skew-y-12 transition duration-700 group-hover:translate-y-[-100%] group-hover:skew-y-0">
+            <a
+              key={name}
+              href={link}
+              className={`block text-[1.8rem] ${active ? "text-black" : "text-black/40"
+                } font-circular-web leading-none py-2`}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {name}
+            </a>
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -192,16 +208,18 @@ const Footer = () => {
         </div>
 
         <div className="w-full flex justify-between items-center font-general px-4 py-4 md:px-10 md:py-6">
-            <p className="uppercase text-[0.7rem] md:text-[12px]">&copy;Zentry 2024. All rights reserved</p>
-            <a
-              className="uppercase text-[0.7rem] md:text-[12px]"
-              href="https://zentry.com/legal/privacy"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              Privacy Policy
-            </a>
-          </div>
+          <p className="uppercase text-[0.7rem] md:text-[12px]">
+            &copy;Zentry 2024. All rights reserved
+          </p>
+          <a
+            className="uppercase text-[0.7rem] md:text-[12px]"
+            href="https://zentry.com/legal/privacy"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </footer>
   );
