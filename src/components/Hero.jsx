@@ -120,7 +120,7 @@ const Hero = () => {
                                 className="size-64 origin-center scale-150 object-cover object-center"
                                 ref={nextVideoRef}
                                 src={getVideoSrc(upcomingVideoIndex)}
-                                onLoadedData={handleVideoLoad}
+                                onCanPlayThrough={handleVideoLoad}
                             />
                         </div>
                     </div>
@@ -130,7 +130,7 @@ const Hero = () => {
                         muted
                         id="next-video"
                         className="absolute-center invisible absolute z-20 size-64 object-cover object-center rounded-lg"
-                        onLoadedData={handleVideoLoad}
+                        onCanPlayThrough={handleVideoLoad}
                         ref={nextVideoRef}
                         src={getVideoSrc(currentIndex)}
                     />
@@ -143,7 +143,7 @@ const Hero = () => {
                             currentIndex === totalVideos - 1 ? 1 : currentIndex
                         )}
                         className="absolute top-0 left-0 size-full object-cover object-center"
-                        onLoadedData={handleVideoLoad}
+                        onCanPlayThrough={handleVideoLoad}
                     />
                 </div>
 
