@@ -136,7 +136,7 @@ const Hero = () => {
                     />
 
                     <video
-                        // autoPlay
+                        autoPlay
                         loop
                         muted
                         src={getVideoSrc(
