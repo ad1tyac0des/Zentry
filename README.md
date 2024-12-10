@@ -6,6 +6,8 @@
   [![GSAP](https://img.shields.io/badge/gsap-88CE02.svg?style=for-the-badge&logo=greensock&logoColor=white)](https://greensock.com/gsap/)
   [![Lenis](https://img.shields.io/badge/lenis-000000.svg?style=for-the-badge&logo=scroll&logoColor=white)](https://github.com/studio-freight/lenis)
 
+  <b>Step into the New Era of Gaming Together </b> <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="20" height="20" />
+
 </div>
 
 ## 📖 Overview
